@@ -22,6 +22,7 @@ const FormField = (props) => {
 
   switch (type) {
     case "username":
+    case "phonenumber":
       formType = "text"
       autofocus = true
       break

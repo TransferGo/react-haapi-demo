@@ -56,6 +56,7 @@ export default function HAAPIProcessor(props) {
             case 'authenticator/html-form/forgot-account-id/get':
             case 'authenticator/html-form/reset-password/get':
             case 'authenticator/username/authenticate/get':
+            case 'authenticator/phonenumber/authenticate/get':
             case 'authenticator/html-form/authenticate/get':
             case 'authenticator/html-form/create-account/get':
                 return <UsernamePassword
