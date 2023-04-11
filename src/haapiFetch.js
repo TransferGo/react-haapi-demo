@@ -22,6 +22,7 @@ export default (() => {
     const haapiFetch = createHaapiFetch({
             clientId: config.clientId,
             tokenEndpoint: config.tokenEndpoint,
+            timeout: 10
         })
 
     haapiFetch.init().catch(e => {
