@@ -1,0 +1,8 @@
+services:
+  happi-demo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    ports:
+      - 3000:3000
