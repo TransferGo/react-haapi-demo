@@ -14,12 +14,33 @@
  *  limitations under the License.
  */
 
-const config = {
-    clientId: 'react-client',
-    redirectUri: 'http://localhost:3000/',
+const url= new URLSearchParams(window.location.search);
+let clientId = 'go_react_client_for_personal_user';
+let environment = 'dev'
+
+if (url.has('client')) {
+    clientId = url.get('client')
+}
+
+if (url.has('env')) {
+    environment = url.get('env');
+}
+
+let config = {
+    clientId: clientId,
     scope: 'openid',
-    authorizationEndpoint: 'https://curity.transfergo.land/oauth/v2/oauth-authorize',
-    tokenEndpoint: 'https://curity.transfergo.land/oauth/v2/oauth-token'
+};
+
+if (environment === 'dev') {
+    config.redirectUri = 'http://localhost:3000/';
+    config.authorizationEndpoint = 'https://curity.transfergo.land/oauth/v2/oauth-authorize'
+    config.tokenEndpoint = 'https://curity.transfergo.land/oauth/v2/oauth-token'
+}
+
+if (environment === 'staging') {
+    config.redirectUri = 'https://dcysov8zlfov7.cloudfront.net/';
+    config.authorizationEndpoint = 'https://api.ms.tgalpha.com/oauth/v2/oauth-authorize'
+    config.tokenEndpoint = 'https://api.ms.tgalpha.com/oauth/v2/oauth-token'
 }
 
 export default config
