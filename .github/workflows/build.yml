@@ -23,6 +23,8 @@ jobs:
 
             - name: Build Demo
               run: npm run build
+              env:
+                CI: ""
 
             - name: Create Archive
               run: zip -r build.zip build
