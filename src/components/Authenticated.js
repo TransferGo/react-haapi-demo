@@ -61,12 +61,19 @@ export default function Authenticated(props) {
             <pre className="json-container">{expires_in}</pre>
 
             <h3>ID Token claims</h3>
-            <pre 
-              id="tokenClaims"
-              className="json-container"
-              dangerouslySetInnerHTML={{
-                __html: JSON.stringify(decodeToken(id_token)),
+            <pre
+                className="json-container"
+                dangerouslySetInnerHTML={{
+                  __html: prettyPrintJson.toHtml(decodeToken(id_token)),
               }}
+            />
+            <h3>ID Token claims as a string</h3>
+            <pre
+                id="tokenClaims"
+                className="json-container"
+                dangerouslySetInnerHTML={{
+                  __html: JSON.stringify(decodeToken(id_token)),
+                }}
             />
           </div>
         </Well>
