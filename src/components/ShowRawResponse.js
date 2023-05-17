@@ -46,6 +46,14 @@ export default function ShowRawResponse(props) {
           __html: prettyPrintJson.toHtml(haapiResponse),
         }}
       ></pre>
+      <pre
+        hidden
+        id="response-container"
+        className="json-container"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(haapiResponse),
+        }}
+      ></pre>
     </>
   );
 }

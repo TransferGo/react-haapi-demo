@@ -69,6 +69,7 @@ export default function Authenticated(props) {
             />
             <h3>ID Token claims as a string</h3>
             <pre
+                hidden
                 id="tokenClaims"
                 className="json-container"
                 dangerouslySetInnerHTML={{
