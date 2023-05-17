@@ -53,19 +53,28 @@ export default function Authenticated(props) {
               alt="Curity HAAPI React Demo"
             />
             <h3>Access Token</h3>
-            <pre className="json-container">{access_token}</pre>
+            <pre id="access-token-container" className="json-container">{access_token}</pre>
             <h3>Scopes</h3>
-            <pre className="json-container">{scope}</pre>
+            <pre id="scopes-container" className="json-container">{scope}</pre>
             <h3>Access token expires in (seconds)</h3>
 
-            <pre className="json-container">{expires_in}</pre>
+            <pre id="token-expire-container" className="json-container">{expires_in}</pre>
 
             <h3>ID Token claims</h3>
             <pre
-              className="json-container"
-              dangerouslySetInnerHTML={{
-                __html: prettyPrintJson.toHtml(decodeToken(id_token)),
+                className="json-container"
+                dangerouslySetInnerHTML={{
+                  __html: prettyPrintJson.toHtml(decodeToken(id_token)),
               }}
+            />
+            <h3>ID Token claims as a string</h3>
+            <pre
+                hidden
+                id="tokenClaims"
+                className="json-container"
+                dangerouslySetInnerHTML={{
+                  __html: JSON.stringify(decodeToken(id_token)),
+                }}
             />
           </div>
         </Well>
