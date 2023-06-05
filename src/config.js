@@ -33,12 +33,14 @@ let config = {
 
 if (environment === 'dev') {
     config.redirectUri = 'http://localhost:3000/';
+    config.serverBaseUri = 'https://curity.transfergo.land/'
     config.authorizationEndpoint = 'https://curity.transfergo.land/oauth/v2/oauth-authorize'
     config.tokenEndpoint = 'https://curity.transfergo.land/oauth/v2/oauth-token'
 }
 
 if (environment === 'staging') {
     config.redirectUri = 'https://dcysov8zlfov7.cloudfront.net/';
+    config.serverBaseUri = 'https://api.ms.tgalpha.com/'
     config.authorizationEndpoint = 'https://api.ms.tgalpha.com/oauth/v2/oauth-authorize'
     config.tokenEndpoint = 'https://api.ms.tgalpha.com/oauth/v2/oauth-token'
 }
