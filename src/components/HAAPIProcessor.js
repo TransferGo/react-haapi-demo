@@ -129,7 +129,7 @@ export default function HAAPIProcessor(props) {
                     "template": "form",
                     "kind": "redirect",
                     "model": {
-                        "href": config.serverBaseUri + "authn/authentication/_action/personal_user_registration.redirect",
+                        "href": config.serverBaseUri + "authn/authentication/_action/personal_user.remittance_registration",
                         "method": "GET"
                     }
                 }
