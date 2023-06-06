@@ -33,6 +33,7 @@ import {prettyPrintJson} from "pretty-print-json";
 import {OidcClient} from "./OidcClient";
 import {InitializationError} from "@curity/identityserver-haapi-web-driver";
 import {haapiConnectionIssue} from "../messages";
+import config from "../config";
 
 export default function HAAPIProcessor(props) {
     const { haapiFetch, setTokens } = props
@@ -64,6 +65,15 @@ export default function HAAPIProcessor(props) {
                 return <UsernamePassword
                     haapiResponse={haapiResponse}
                     submitForm={(formState, url, method) => submitForm(formState, url, method)}
+                    isLoading={isLoading}
+                    clickLink={(url) => clickLink(url)}
+                    inputProblem={step.inputProblem}
+                />
+
+            case 'authentication-action/remittance-register-action/index':
+                return <UsernamePassword
+                    haapiResponse={haapiResponse}
+                    submitForm={(formState, url, method) => submitRemittanceForm(formState, url, method)}
                     isLoading={isLoading}
                     clickLink={(url) => clickLink(url)}
                     inputProblem={step.inputProblem}
@@ -105,6 +115,27 @@ export default function HAAPIProcessor(props) {
             method,
             formState
         )
+    }
+
+    const submitRemittanceForm = async (formState, url, method) => {
+        setIsLoading(true)
+        const haapiResponse = {
+            "metadata": {
+                "viewName": "/templates/redirect"
+            },
+            "type": "redirection-step",
+            "actions": [
+                {
+                    "template": "form",
+                    "kind": "redirect",
+                    "model": {
+                        "href": config.serverBaseUri + "authn/authentication/_action/personal_user.remittance_registration",
+                        "method": "GET"
+                    }
+                }
+            ]
+        }
+        setStep({ name: 'process-result', haapiResponse })
     }
 
     const processHaapiResult = async () => {
