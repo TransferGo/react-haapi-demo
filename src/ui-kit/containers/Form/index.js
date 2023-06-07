@@ -41,13 +41,14 @@ class Form extends Component {
         {inputProblem && <Error message={inputProblem.title}/>}
         <Heading title={computedTitle} />
         {showSubtitle && <p>{headingTitle}</p>}
-        {fields && fields.map(({ label, kind, name, type }) => (
+        {fields && fields.map(({ label, kind, name, type, value }) => (
           <FormField
             key={name}
             href={href}
             label={label}
             name={name}
             type={type}
+            value={value}
             onChange={(event) => onChange(name, event.target.value)}
             fieldProblem={inputProblem && inputProblem.invalidFields.find((field) => field.name === name)}
           />

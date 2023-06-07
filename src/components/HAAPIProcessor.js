@@ -33,7 +33,6 @@ import {prettyPrintJson} from "pretty-print-json";
 import {OidcClient} from "./OidcClient";
 import {InitializationError} from "@curity/identityserver-haapi-web-driver";
 import {haapiConnectionIssue} from "../messages";
-import config from "../config";
 
 export default function HAAPIProcessor(props) {
     const { haapiFetch, setTokens } = props
@@ -119,23 +118,27 @@ export default function HAAPIProcessor(props) {
 
     const submitRemittanceForm = async (formState, url, method) => {
         setIsLoading(true)
-        const haapiResponse = {
-            "metadata": {
-                "viewName": "/templates/redirect"
-            },
-            "type": "redirection-step",
-            "actions": [
-                {
-                    "template": "form",
-                    "kind": "redirect",
-                    "model": {
-                        "href": config.serverBaseUri + "authn/authentication/_action/personal_user.remittance_registration",
-                        "method": "GET"
-                    }
-                }
-            ]
-        }
+        const haapiResponse = await callRemittance(url, method, formState)
         setStep({ name: 'process-result', haapiResponse })
+    }
+
+    const callRemittance = async (url, method, data) => {
+        let jsonData = {};
+        data.forEach((value, key) => {
+            jsonData[key] = value
+        })
+        console.log(jsonData)
+        const response = await fetch(
+            url,
+            {
+                method: method,
+                headers: {
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(jsonData)
+            }
+        )
+        return await response.json()
     }
 
     const processHaapiResult = async () => {
