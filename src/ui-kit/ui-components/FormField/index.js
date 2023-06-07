@@ -17,8 +17,8 @@
 import React from "react"
 
 const FormField = (props) => {
-  const { type, name, label, onChange, fieldProblem } = props
-  let formType, autofocus
+  const { type, name, label, onChange, fieldProblem, value} = props
+  let formType, autofocus, fieldValue
 
   switch (type) {
     case "username":
@@ -31,6 +31,15 @@ const FormField = (props) => {
       break
     case "checkbox":
         formType = "checkbox"
+          break
+    case "hidden":
+        formType = "hidden"
+        fieldValue = value
+        onChange({
+            target: {
+                value: value
+            }
+        })
           break
     default:
       formType = "text"
@@ -52,6 +61,7 @@ const FormField = (props) => {
         autoFocus={autofocus}
         autoComplete={name}
         data-lpignore="true"
+        value={fieldValue}
         onChange={onChange}
       />
         {fieldProblem && <div className="is-error-danger is-error">{fieldProblem.detail}</div>}
