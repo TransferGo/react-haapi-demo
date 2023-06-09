@@ -61,13 +61,19 @@ export default function HAAPIProcessor(props) {
             case 'authenticator/html-form/create-account/get':
             case 'authenticator/sms/enter-otp/get':
             case 'authentication-action/captcha-action/index':
-                return <UsernamePassword
-                    haapiResponse={haapiResponse}
-                    submitForm={(formState, url, method) => submitForm(formState, url, method)}
-                    isLoading={isLoading}
-                    clickLink={(url) => clickLink(url)}
-                    inputProblem={step.inputProblem}
-                />
+            case 'authenticator/idtoken-authenticator/authenticate/get':
+                if (haapiResponse.actions[0].model.fields.length === 1) {
+                    return <UsernamePassword
+                        haapiResponse={haapiResponse}
+                        submitForm={(formState, url, method) => submitForm(formState, url, method)}
+                        isLoading={isLoading}
+                        clickLink={(url) => clickLink(url)}
+                        inputProblem={step.inputProblem}
+                    />
+                } else {
+                    processIdTokenAuthenticator()
+                    return  <Spinner/>
+                }
 
             case 'authentication-action/remittance-register-action/index':
                 return <UsernamePassword
@@ -221,6 +227,16 @@ export default function HAAPIProcessor(props) {
 
         setStep({ name: 'unknown-step', haapiResponse: step.haapiResponse})
         setMissingResponseType('Continue Step')
+    }
+
+    const processIdTokenAuthenticator = async () => {
+        const action = step.haapiResponse.actions[0]
+        const fields = [{...action.model.fields[1], value: localStorage.getItem('idToken')}]
+        await callHaapi(
+            action.model.href,
+            action.model.method,
+            getRedirectBody(fields)
+        )
     }
 
     const launchExternalBrowser = async () => {
