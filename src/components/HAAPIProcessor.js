@@ -123,11 +123,6 @@ export default function HAAPIProcessor(props) {
     }
 
     const callRemittance = async (url, method, data) => {
-        let jsonData = {};
-        data.forEach((value, key) => {
-            jsonData[key] = value
-        })
-        console.log(jsonData)
         const response = await fetch(
             url,
             {
@@ -135,7 +130,7 @@ export default function HAAPIProcessor(props) {
                 headers: {
                     "Accept": "application/json"
                 },
-                body: JSON.stringify(jsonData)
+                body: data
             }
         )
         return await response.json()
