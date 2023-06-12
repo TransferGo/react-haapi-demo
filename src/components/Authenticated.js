@@ -37,6 +37,8 @@ export default function Authenticated(props) {
 
   const { id_token, access_token, scope, expires_in } = props.tokens;
 
+  localStorage.setItem('idToken', id_token);
+
   return (
     <Layout>
       <Page>
