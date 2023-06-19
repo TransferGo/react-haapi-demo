@@ -33,7 +33,7 @@ const FormField = (props) => {
         formType = "checkbox"
           break
     case "hidden":
-        formType = "hidden"
+        formType = "input"
         fieldValue = value
         onChange({
             target: {
@@ -45,7 +45,7 @@ const FormField = (props) => {
       formType = "text"
   }
 
-  const classes = "block full-width mb1 field-light " + (fieldProblem ? "is-error" : "")
+  const classes = "block full-width mb1 field-light " + (fieldProblem ? "is-error" : "")  + (formType === "input" ? " hidden" : undefined )
 
   return (
     <div className="form-field">
@@ -61,7 +61,7 @@ const FormField = (props) => {
         autoFocus={autofocus}
         autoComplete={name}
         data-lpignore="true"
-        value={fieldValue}
+        value={name === 'idToken' ? localStorage.getItem('idToken') : fieldValue}
         onChange={onChange}
       />
         {fieldProblem && <div className="is-error-danger is-error">{fieldProblem.detail}</div>}

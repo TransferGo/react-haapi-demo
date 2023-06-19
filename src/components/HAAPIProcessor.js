@@ -73,8 +73,13 @@ export default function HAAPIProcessor(props) {
                         inputProblem={step.inputProblem}
                     />
                 } else {
-                    processIdTokenAuthenticator()
-                    return  <Spinner/>
+                    return <UsernamePassword
+                        haapiResponse={haapiResponse}
+                        submitForm={(formState, url, method) => submitForm(formState, url, method)}
+                        isLoading={isLoading}
+                        clickLink={(url) => clickLink(url)}
+                        inputProblem={step.inputProblem}
+                    />;
                 }
 
             case 'authentication-action/remittance-register-action/index':
@@ -229,16 +234,6 @@ export default function HAAPIProcessor(props) {
 
         setStep({ name: 'unknown-step', haapiResponse: step.haapiResponse})
         setMissingResponseType('Continue Step')
-    }
-
-    const processIdTokenAuthenticator = async () => {
-        const action = step.haapiResponse.actions[0]
-        const fields = [{...action.model.fields[1], value: localStorage.getItem('idToken')}]
-        await callHaapi(
-            action.model.href,
-            action.model.method,
-            getRedirectBody(fields)
-        )
     }
 
     const launchExternalBrowser = async () => {
