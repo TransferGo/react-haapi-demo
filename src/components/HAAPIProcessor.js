@@ -60,7 +60,9 @@ export default function HAAPIProcessor(props) {
             case 'authenticator/html-form/authenticate/get':
             case 'authenticator/html-form/create-account/get':
             case 'authenticator/sms/enter-otp/get':
+            case 'authenticator/otp-captcha/enter-otp/get':
             case 'authentication-action/captcha-action/index':
+            case 'authenticator/otp-captcha/hcaptcha/get':
             case 'authenticator/idtoken-authenticator/authenticate/get':
                 if (haapiResponse.actions[0].model.fields.length === 1) {
                     return <UsernamePassword
