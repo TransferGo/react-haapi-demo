@@ -33,6 +33,7 @@ import {prettyPrintJson} from "pretty-print-json";
 import {OidcClient} from "./OidcClient";
 import {InitializationError} from "@curity/identityserver-haapi-web-driver";
 import {haapiConnectionIssue} from "../messages";
+import IdTokenAuthenticator from "../ui-kit/authenticators/IdTokenAuthenticator";
 
 export default function HAAPIProcessor(props) {
     const { haapiFetch, setTokens } = props
@@ -63,6 +64,13 @@ export default function HAAPIProcessor(props) {
             case 'authenticator/otp-captcha/enter-otp/get':
             case 'authentication-action/captcha-action/index':
             case 'authenticator/otp-captcha/hcaptcha/get':
+                return <UsernamePassword
+                    haapiResponse={haapiResponse}
+                    submitForm={(formState, url, method) => submitForm(formState, url, method)}
+                    isLoading={isLoading}
+                    clickLink={(url) => clickLink(url)}
+                    inputProblem={step.inputProblem}
+                />;
             case 'authenticator/idtoken-authenticator/authenticate/get':
                 if (haapiResponse.actions[0].model.fields.length === 1) {
                     return <UsernamePassword
@@ -73,13 +81,11 @@ export default function HAAPIProcessor(props) {
                         inputProblem={step.inputProblem}
                     />
                 } else {
-                    return <UsernamePassword
+                    return <IdTokenAuthenticator
                         haapiResponse={haapiResponse}
-                        submitForm={(formState, url, method) => submitForm(formState, url, method)}
                         isLoading={isLoading}
-                        clickLink={(url) => clickLink(url)}
-                        inputProblem={step.inputProblem}
-                    />;
+                        submitForm={(formState, url, method) => submitForm(formState, url, method)}
+                    />
                 }
 
             case 'authentication-action/remittance-register-action/index':

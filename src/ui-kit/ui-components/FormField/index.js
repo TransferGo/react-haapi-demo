@@ -37,7 +37,7 @@ const FormField = (props) => {
         fieldValue = value
         onChange({
             target: {
-                value: value
+                value: fieldValue
             }
         })
           break
@@ -61,7 +61,7 @@ const FormField = (props) => {
         autoFocus={autofocus}
         autoComplete={name}
         data-lpignore="true"
-        value={name === 'idToken' ? localStorage.getItem('idToken') : fieldValue}
+        value={fieldValue}
         onChange={onChange}
       />
         {fieldProblem && <div className="is-error-danger is-error">{fieldProblem.detail}</div>}
