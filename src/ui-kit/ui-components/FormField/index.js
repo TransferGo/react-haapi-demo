@@ -33,11 +33,11 @@ const FormField = (props) => {
         formType = "checkbox"
           break
     case "hidden":
-        formType = "hidden"
+        formType = "input"
         fieldValue = value
         onChange({
             target: {
-                value: value
+                value: fieldValue
             }
         })
           break
@@ -45,7 +45,7 @@ const FormField = (props) => {
       formType = "text"
   }
 
-  const classes = "block full-width mb1 field-light " + (fieldProblem ? "is-error" : "")
+  const classes = "block full-width mb1 field-light " + (fieldProblem ? "is-error" : "")  + (formType === "input" ? " hidden" : undefined )
 
   return (
     <div className="form-field">
