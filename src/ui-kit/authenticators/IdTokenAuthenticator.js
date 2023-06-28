@@ -31,7 +31,6 @@ export default function IdTokenAuthenticator(props) {
     const onChange = (name, value) => {
         setState((prevState) => {
             prevState.set('idToken', prevState.get('idToken') === localStorage.getItem('idToken') ? null : localStorage.getItem('idToken'))
-            console.log(prevState.get('idToken'))
             return prevState
         })
     }
@@ -51,7 +50,6 @@ export default function IdTokenAuthenticator(props) {
             }
         ]
     }
-    console.log(modifiedModel)
 
     return (
         <Layout>
