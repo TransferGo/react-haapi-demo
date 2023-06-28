@@ -29,9 +29,14 @@ export default function UsernamePassword(props) {
 
     const [state, setState] = useState(new URLSearchParams())
 
-    const onChange = (name, value) => {
+    const onChange = (name, value, type) => {
         setState((prevState) => {
-            prevState.set(name, value)
+            if (type === 'checkbox') {
+                const newValue = prevState.get(name) === 'on' ? 'off' : 'on'
+                prevState.set(name, newValue)
+            } else {
+                prevState.set(name, value)
+            }
             return prevState
         })
     }
