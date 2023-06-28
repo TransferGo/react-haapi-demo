@@ -18,7 +18,7 @@ import React from "react"
 
 const FormField = (props) => {
   const { type, name, label, onChange, fieldProblem, value} = props
-  let formType, autofocus, fieldValue
+  let formType, autofocus, fieldValue;
 
   switch (type) {
     case "username":
@@ -31,6 +31,7 @@ const FormField = (props) => {
       break
     case "checkbox":
         formType = "checkbox"
+        fieldValue = 'off'
           break
     case "hidden":
         formType = "input"

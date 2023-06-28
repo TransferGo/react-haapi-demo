@@ -49,7 +49,7 @@ class Form extends Component {
             name={name}
             type={type}
             value={value}
-            onChange={(event) => onChange(name, event.target.value)}
+            onChange={(event) => onChange(name, event.target.value, type)}
             fieldProblem={inputProblem && inputProblem.invalidFields.find((field) => field.name === name)}
           />
         ))}
