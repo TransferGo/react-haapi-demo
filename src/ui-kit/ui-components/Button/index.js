@@ -33,7 +33,7 @@ const Button = (props) => {
     const classNames = `mt2 button button-fullwidth ${buttonType} button-${authenticator}`
 
     return (
-    <button className={classNames} id="submit" onClick={(event) => handleClick(event)}>
+    <button className={classNames} id="submit" data-qa={title} onClick={(event) => handleClick(event)}>
       <span className="icon">
         {type === "social" && <Icon type={authenticator} />}
       </span>
