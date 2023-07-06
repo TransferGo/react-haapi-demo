@@ -24,7 +24,7 @@ const Error = (props) => {
 
   return (
     <div className="error">
-      <div className="alert alert-danger px4 mt2">{errorText}</div>
+      <div id="alerts" className="alert alert-danger px4 mt2">{errorText}</div>
     </div>
   );
 };

@@ -18,6 +18,6 @@ export default function StartAuthorization(props) {
     const { startAuthorization } = props
 
     return <>
-        <button onClick={startAuthorization} className="button button-primary button-fullwidth">Login</button>
+        <button onClick={startAuthorization} className="button button-primary button-fullwidth" id="submit" data-qa="start">Login</button>
     </>
 }
