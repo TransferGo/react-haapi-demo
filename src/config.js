@@ -45,4 +45,18 @@ if (environment === 'staging') {
     config.tokenEndpoint = 'https://api.ms.tgalpha.com/oauth/v2/oauth-token'
 }
 
+if (environment === 'staging-api') {
+    config.redirectUri = 'https://dcysov8zlfov7.cloudfront.net/';
+    config.serverBaseUri = 'https://api.tgalpha.com/'
+    config.authorizationEndpoint = 'https://api.tgalpha.com/oauth/v2/oauth-authorize'
+    config.tokenEndpoint = 'https://api.tgalpha.com/oauth/v2/oauth-token'
+}
+
+if (environment === 'staging-auth') {
+    config.redirectUri = 'https://dcysov8zlfov7.cloudfront.net/';
+    config.serverBaseUri = 'https://auth.tgalpha.com/'
+    config.authorizationEndpoint = 'https://auth.tgalpha.com/oauth/v2/oauth-authorize'
+    config.tokenEndpoint = 'https://auth.tgalpha.com/oauth/v2/oauth-token'
+}
+
 export default config
