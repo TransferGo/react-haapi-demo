@@ -26,11 +26,19 @@ export default function IdTokenAuthenticator(props) {
     const { actions, links, messages } = props.haapiResponse
     const { model, title } = actions[0]
 
-    const [state, setState] = useState(new URLSearchParams({'idToken': null}))
+    const [state, setState] = useState(new URLSearchParams({'idToken': null, 'username': null}))
 
-    const onChange = (name, value) => {
+    const onChange = (name, value, type) => {
         setState((prevState) => {
-            prevState.set('idToken', prevState.get('idToken') === localStorage.getItem('idToken') ? null : localStorage.getItem('idToken'))
+            if (type === 'checkbox') {
+                prevState.set(
+                    'idToken',
+                    prevState.get('idToken') === localStorage.getItem('idToken') ?
+                        null :
+                        localStorage.getItem('idToken'))
+            } else {
+                prevState.set(name, value)
+            }
             return prevState
         })
     }
@@ -47,6 +55,11 @@ export default function IdTokenAuthenticator(props) {
                 name: "checkbox",
                 type: "checkbox",
                 label: "Send Id Token?"
+            },
+            {
+                name: "username",
+                type: "username",
+                label: "Username",
             }
         ]
     }
