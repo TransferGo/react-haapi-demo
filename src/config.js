@@ -33,26 +33,12 @@ let config = {
 
 if (environment === 'dev') {
     config.redirectUri = 'http://localhost:3000/';
-    config.serverBaseUri = 'https://ms.transfergo.land/'
-    config.authorizationEndpoint = 'https://ms.transfergo.land/oauth/v2/oauth-authorize'
-    config.tokenEndpoint = 'https://ms.transfergo.land/oauth/v2/oauth-token'
+    config.serverBaseUri = 'https://auth.transfergo.land/'
+    config.authorizationEndpoint = 'https://auth.transfergo.land/oauth/v2/oauth-authorize'
+    config.tokenEndpoint = 'https://auth.transfergo.land/oauth/v2/oauth-token'
 }
 
 if (environment === 'staging') {
-    config.redirectUri = 'https://dcysov8zlfov7.cloudfront.net/';
-    config.serverBaseUri = 'https://api.ms.tgalpha.com/'
-    config.authorizationEndpoint = 'https://api.ms.tgalpha.com/oauth/v2/oauth-authorize'
-    config.tokenEndpoint = 'https://api.ms.tgalpha.com/oauth/v2/oauth-token'
-}
-
-if (environment === 'staging-api') {
-    config.redirectUri = 'https://dcysov8zlfov7.cloudfront.net/';
-    config.serverBaseUri = 'https://api.tgalpha.com/'
-    config.authorizationEndpoint = 'https://api.tgalpha.com/oauth/v2/oauth-authorize'
-    config.tokenEndpoint = 'https://api.tgalpha.com/oauth/v2/oauth-token'
-}
-
-if (environment === 'staging-auth') {
     config.redirectUri = 'https://dcysov8zlfov7.cloudfront.net/';
     config.serverBaseUri = 'https://auth.tgalpha.com/'
     config.authorizationEndpoint = 'https://auth.tgalpha.com/oauth/v2/oauth-authorize'
