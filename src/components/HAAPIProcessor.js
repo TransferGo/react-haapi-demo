@@ -99,11 +99,18 @@ export default function HAAPIProcessor(props) {
                     inputProblem={step.inputProblem}
                 />
             case 'views/select-authenticator/index':
-                return <PreSelectedSelector
+                if (config.authenticator == null) {
+                    return <Selector
+                        actions={haapiResponse.actions}
+                        submitForm={(url, method) => submitForm( null, url, method)}
+                    />
+                } else {
+                    return <PreSelectedSelector
                         actions={haapiResponse.actions}
                         submitForm={(url, method) => submitForm( null, url, method)}
                         authenticator={config.authenticator}
-                        />
+                    />
+                }
             case 'authenticator/html-form/reset-password/post':
             case 'authenticator/html-form/forgot-account-id/post':
             case 'authenticator/html-form/create-account/post':
