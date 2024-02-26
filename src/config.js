@@ -17,6 +17,7 @@
 const url= new URLSearchParams(window.location.search);
 let clientId = 'go_react_client_for_personal_user';
 let environment = 'dev'
+let authenticator = 'personal_user_phone.username';
 
 if (url.has('client')) {
     clientId = url.get('client')
@@ -25,10 +26,14 @@ if (url.has('client')) {
 if (url.has('env')) {
     environment = url.get('env');
 }
+if (url.has('authenticator')) {
+    authenticator = url.get('authenticator');
+}
 
 let config = {
     clientId: clientId,
     scope: 'openid',
+    authenticator: authenticator,
 };
 
 if (environment === 'dev') {

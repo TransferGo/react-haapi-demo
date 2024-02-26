@@ -34,6 +34,8 @@ import {OidcClient} from "./OidcClient";
 import {InitializationError} from "@curity/identityserver-haapi-web-driver";
 import {haapiConnectionIssue} from "../messages";
 import IdTokenAuthenticator from "../ui-kit/authenticators/IdTokenAuthenticator";
+import PreSelectedSelector from "../ui-kit/containers/PreSelectedSelector";
+import config from "../config";
 
 export default function HAAPIProcessor(props) {
     const { haapiFetch, setTokens } = props
@@ -97,9 +99,10 @@ export default function HAAPIProcessor(props) {
                     inputProblem={step.inputProblem}
                 />
             case 'views/select-authenticator/index':
-                return <Selector
+                return <PreSelectedSelector
                         actions={haapiResponse.actions}
                         submitForm={(url, method) => submitForm( null, url, method)}
+                        authenticator={config.authenticator}
                         />
             case 'authenticator/html-form/reset-password/post':
             case 'authenticator/html-form/forgot-account-id/post':
