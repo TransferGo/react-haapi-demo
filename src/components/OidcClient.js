@@ -25,6 +25,11 @@ class OidcClient {
         queryParams.append('code_challenge', codeChallenge)
         queryParams.append('redirect_uri', config.redirectUri)
 
+        const windowQueryParameter = new URLSearchParams(window.location.search);
+        if (windowQueryParameter.has('acr_values')) {
+            queryParams.append('acr_values', windowQueryParameter.get('acr_values'))
+        }
+
         return url
     }
 }
