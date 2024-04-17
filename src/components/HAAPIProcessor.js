@@ -67,6 +67,8 @@ export default function HAAPIProcessor(props) {
             case 'authentication-action/captcha-action/index':
             case 'authenticator/otp-captcha/hcaptcha/get':
             case 'authenticator/device-secret/authentication/get':
+            case 'authenticator/phone-number-authenticator/authenticate/get':
+            case 'authentication-action/reset-password/index':
                 return <UsernamePassword
                     haapiResponse={haapiResponse}
                     submitForm={(formState, url, method) => submitForm(formState, url, method)}
