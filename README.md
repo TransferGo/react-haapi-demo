@@ -11,6 +11,13 @@ To run the demo app:
 2. Set configuration settings in `src/config.js`, e.g. endpoints of the Curity Identity Server, client ID, etc.
 3. Run the app with `npm start`. A browser will be opened navigating to `http://localhost:3000`.
 
+## Deploying the demo to staging
+1. Go to the `General Playground` AWS account with the `AWSAdministratorAccess` role.
+2. Go to the `curity-happi-demo` S3 bucket.
+3. Delete all objects from it.
+4. On the branch that you want to deploy, run locally `npm install && npm run build`
+5. Copy content of the generated build file to the `curity-happi-demo` S3 bucket.
+
 ## Running with the provided instance of the Curity Identity Server
 
 The `/idsvr` folder contains scripts that let you start an instance of the Curity Identity Server preconfigured to work with this app.
