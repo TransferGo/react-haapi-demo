@@ -282,7 +282,12 @@ export default function HAAPIProcessor(props) {
     }
 
     const callHaapi = async (url, method = 'GET', data = null) => {
-        const init = { method }
+        const init = {
+            method,
+            headers: {
+                "X-Locale": "en"
+            }
+        }
         let finalUrl = url
 
         if (data) {
