@@ -101,3 +101,14 @@
   z-index: 10;
   left: calc(50% - 100px);
 }
+
+.login-container{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  
+  & label{
+    margin-right: 5px;
+  }
+}
