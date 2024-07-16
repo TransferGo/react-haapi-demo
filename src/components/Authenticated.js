@@ -35,7 +35,7 @@ export default function Authenticated(props) {
     return decodeToken(idToken).sub;
   };
 
-  const { id_token, access_token, scope, expires_in } = props.tokens;
+  const { id_token, access_token, expires_in, nonce_token, refresh_token } = props.tokens;
 
   localStorage.setItem('idToken', id_token);
 
@@ -54,28 +54,46 @@ export default function Authenticated(props) {
               style={{ maxWidth: "300px" }}
               alt="Curity HAAPI React Demo"
             />
+
             <h3>Access Token</h3>
             <pre id="access-token-container" className="json-container">{access_token}</pre>
-            <h3>Scopes</h3>
-            <pre id="scopes-container" className="json-container">{scope}</pre>
-            <h3>Access token expires in (seconds)</h3>
 
-            <pre id="token-expire-container" className="json-container">{expires_in}</pre>
-
-            <h3>ID Token claims</h3>
+            <h3>Access Token Claims</h3>
             <pre
                 className="json-container"
                 dangerouslySetInnerHTML={{
-                  __html: prettyPrintJson.toHtml(decodeToken(id_token)),
+                  __html: prettyPrintJson.toHtml(decodeToken(access_token)),
               }}
             />
-            <h3>ID Token claims as a string</h3>
+
+            <h3>Access token expires in (seconds)</h3>
+            <pre id="token-expire-container" className="json-container">{expires_in}</pre>
+
+            <h3>refresh_token, nonce_token</h3>
+            <pre className="json-container">{refresh_token}   {nonce_token}</pre>
+
             <pre
                 hidden
-                id="tokenClaims"
+                id="accessTokenClaims"
+                className="json-container"
+                dangerouslySetInnerHTML={{
+                  __html: JSON.stringify(decodeToken(access_token)),
+                }}
+            />
+            <pre
+                hidden
+                id="idTokenClaims"
                 className="json-container"
                 dangerouslySetInnerHTML={{
                   __html: JSON.stringify(decodeToken(id_token)),
+                }}
+            />
+            <pre
+                hidden
+                id="nonceToken"
+                className="json-container"
+                dangerouslySetInnerHTML={{
+                  __html: nonce_token,
                 }}
             />
           </div>

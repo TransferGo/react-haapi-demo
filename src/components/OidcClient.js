@@ -13,13 +13,13 @@ class OidcClient {
         setTokens(tokens)
     }
 
-    getAuthorizationUrl = async () => {
+    getAuthorizationUrl = async (scopes) => {
         const codeChallenge = await calculateCodeChallenge(this.codeVerifier)
 
         const url = new URL(config.authorizationEndpoint)
         const queryParams = url.searchParams
         queryParams.append('client_id', config.clientId)
-        queryParams.append('scope', config.scope)
+        queryParams.append('scope', scopes)
         queryParams.append('response_type', 'code')
         queryParams.append('code_challenge_method', 'S256')
         queryParams.append('code_challenge', codeChallenge)

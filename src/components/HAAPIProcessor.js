@@ -67,9 +67,11 @@ export default function HAAPIProcessor(props) {
             case 'authentication-action/captcha-action/index':
             case 'authenticator/otp-captcha/hcaptcha/get':
             case 'authenticator/device-secret/authentication/get':
+            case 'authenticator/business-nonce/authentication/get':
             case 'authenticator/phone-number-authenticator/authenticate/get':
             case 'authentication-action/reset-password/index':
             case 'authentication-action/create-passcode/index':
+            case 'authentication-action/attribute-prompt/index':
                 return <UsernamePassword
                     haapiResponse={haapiResponse}
                     submitForm={(formState, url, method) => submitForm(formState, url, method)}
@@ -132,11 +134,11 @@ export default function HAAPIProcessor(props) {
         }
     }
 
-    const startAuthorization = async () => {
+    const startAuthorization = async (scopes) => {
         setStep({ name: 'loading', haapiResponse: null })
         setIsLoading(true)
 
-        const url = await oidcClient.getAuthorizationUrl()
+        const url = await oidcClient.getAuthorizationUrl(scopes)
         await callHaapi(url)
     }
 
@@ -400,7 +402,7 @@ export default function HAAPIProcessor(props) {
                             <Heading title="This is a demo app showing HAAPI capabilities" />
                             <p>Click the button below to start the login flow without leaving this SPA</p>
                         </div>
-                        <StartAuthorization startAuthorization={() => startAuthorization()} />
+                        <StartAuthorization startAuthorization={startAuthorization} />
                     </Well>
                 </Page>
             </Layout>

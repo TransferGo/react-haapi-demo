@@ -32,7 +32,6 @@ if (url.has('authenticator')) {
 
 let config = {
     clientId: clientId,
-    scope: 'openid',
     authenticator: authenticator,
 };
 
