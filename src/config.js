@@ -15,7 +15,7 @@
  */
 
 const url= new URLSearchParams(window.location.search);
-let clientId = 'go_react_client_for_personal_user';
+let clientId = 'go_react_client_for_personal_user_v2';
 let environment = 'dev'
 let authenticator = null;
 
