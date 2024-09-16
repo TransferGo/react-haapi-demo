@@ -108,6 +108,7 @@ export default function HAAPIProcessor(props) {
                     inputProblem={step.inputProblem}
                 />
             case 'views/select-authenticator/index':
+            case 'authenticator/group/authenticate/get':
                 if (config.authenticator == null) {
                     return <Selector
                         actions={haapiResponse.actions}
