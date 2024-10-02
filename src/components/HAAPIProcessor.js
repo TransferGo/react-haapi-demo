@@ -75,6 +75,7 @@ export default function HAAPIProcessor(props) {
             case 'authenticator/email/enter-otp/index':
             case 'authentication-action/debug-attribute/index':
             case 'authenticator/jwt-token-authenticator/authenticate/get':
+            case 'authentication-action/intermediate-response/index':
                 return <UsernamePassword
                     haapiResponse={haapiResponse}
                     submitForm={(formState, url, method) => submitForm(formState, url, method)}
