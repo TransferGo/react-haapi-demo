@@ -41,6 +41,17 @@ export default function UsernamePassword(props) {
         })
     }
 
+    const fields = actions[0]?.model?.fields;
+    if (fields && Array.isArray(fields)) {
+        fields.forEach(field => {
+            if (field.type === 'checkbox') {
+                if (!state.has(field.name)) {
+                    state.set(field.name, 'off')
+                }
+            }
+        })
+    }
+
     const computedTitle =
         (messages && messages.find(m => m.classList.includes("heading"))?.text)
         || title
