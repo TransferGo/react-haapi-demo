@@ -35,7 +35,7 @@ function App() {
     <Layout>
       <Header/>
       <Main>
-        {tokens && <Authenticated tokens={tokens} />}
+        {tokens && <Authenticated tokens={tokens} setTokens={setTokens} />}
         {!tokens && <HAAPIProcessor haapiFetch={haapiFetch} setTokens={setTokens} />}
       </Main>
     </Layout>

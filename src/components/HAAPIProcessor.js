@@ -22,6 +22,7 @@ import UsernamePassword from "../ui-kit/authenticators/UsernamePassword";
 
 /* UI Containers */
 import Selector from "../ui-kit/containers/Selector";
+import FormSelector from "../ui-kit/containers/FormSelector";
 
 /* UI Components */
 import {Spinner, Error, Layout, Page, Well, Logo, Heading} from "../ui-kit/ui-components";
@@ -58,6 +59,7 @@ export default function HAAPIProcessor(props) {
         switch (view) {
             case 'authenticator/html-form/forgot-account-id/get':
             case 'authenticator/html-form/reset-password/get':
+            case 'authenticator/passcode-authenticator/enter':
             case 'authenticator/username/authenticate/get':
             case 'authenticator/phonenumber/authenticate/get':
             case 'authenticator/html-form/authenticate/get':
@@ -125,6 +127,11 @@ export default function HAAPIProcessor(props) {
                         authenticator={config.authenticator}
                     />
                 }
+            case 'authentication-action/selector/index':
+                return <FormSelector
+                    actions={haapiResponse.actions}
+                    submitForm={(formState, url, method) => submitForm(formState, url, method)}
+                />
             case 'authenticator/html-form/reset-password/post':
             case 'authenticator/html-form/forgot-account-id/post':
             case 'authenticator/html-form/create-account/post':
@@ -142,11 +149,11 @@ export default function HAAPIProcessor(props) {
         }
     }
 
-    const startAuthorization = async (scopes) => {
+    const startAuthorization = async (scopes, acrValues) => {
         setStep({ name: 'loading', haapiResponse: null })
         setIsLoading(true)
 
-        const url = await oidcClient.getAuthorizationUrl(scopes)
+        const url = await oidcClient.getAuthorizationUrl(scopes, acrValues)
         await callHaapi(url)
     }
 
