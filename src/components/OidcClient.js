@@ -13,7 +13,7 @@ class OidcClient {
         setTokens(tokens)
     }
 
-    getAuthorizationUrl = async (scopes) => {
+    getAuthorizationUrl = async (scopes, acrValues) => {
         const codeChallenge = await calculateCodeChallenge(this.codeVerifier)
 
         const url = new URL(config.authorizationEndpoint)
@@ -28,6 +28,10 @@ class OidcClient {
         const windowQueryParameter = new URLSearchParams(window.location.search);
         if (windowQueryParameter.has('acr_values')) {
             queryParams.append('acr_values', windowQueryParameter.get('acr_values'))
+        }
+
+        if (acrValues) {
+            queryParams.append('acr_values', acrValues)
         }
 
         return url

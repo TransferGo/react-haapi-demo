@@ -97,6 +97,14 @@ export default function Authenticated(props) {
                 }}
             />
           </div>
+          <div style={{ display: "flex", justifyContent: "center", gap: "16px", marginTop: "16px" }}>
+            {/* <button className="button button-primary" onClick={() => props.setTokens(null)}>
+              Start authentication with the same HAAPI session
+            </button> */}
+            <button className="button" onClick={() => window.location.reload()}>
+              Logout
+            </button>
+          </div>
         </Well>
       </Page>
     </Layout>

@@ -4,6 +4,7 @@ export default function StartAuthorization(props) {
   const { startAuthorization } = props;
 
   const [scopes, setScopes] = useState(new Set(["openid", "user"]));
+  const [acrValues, setAcrValues] = useState("");
 
   const onChange = (name, checked) => {
     if (checked) scopes.add(name);
@@ -26,8 +27,19 @@ export default function StartAuthorization(props) {
         checked={scopes.has("business")}
         onChange={onChange}
       />
+      <h3>Enter ACR value (optional)</h3>
+      <div className="form-field mb1">
+        <input
+          type="text"
+          id="acr_values"
+          name="acr_values"
+          className="block full-width mb1 field-light"
+          value={acrValues}
+          onChange={(event) => setAcrValues(event.target.value)}
+        />
+      </div>
       <button
-        onClick={() => startAuthorization(Array.from(scopes).join(" "))}
+        onClick={() => startAuthorization(Array.from(scopes).join(" "), acrValues)}
         className="button button-primary button-fullwidth"
         id="submit"
         data-qa="start"

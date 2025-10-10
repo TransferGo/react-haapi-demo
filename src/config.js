@@ -18,6 +18,7 @@ const url= new URLSearchParams(window.location.search);
 let clientId = 'go_react_client_for_personal_user_v2';
 let environment = 'dev'
 let authenticator = null;
+let cbeDomain = "curity";
 
 if (url.has('client')) {
     clientId = url.get('client')
@@ -26,6 +27,12 @@ if (url.has('client')) {
 if (url.has('env')) {
     environment = url.get('env');
 }
+
+if (url.has('cbe_domain')) {
+    cbeDomain = url.get('cbe_domain');
+}
+
+
 if (url.has('authenticator')) {
     authenticator = url.get('authenticator');
 }
@@ -47,6 +54,13 @@ if (environment === 'staging') {
     config.serverBaseUri = 'https://auth.tgalpha.com/'
     config.authorizationEndpoint = 'https://auth.tgalpha.com/oauth/v2/oauth-authorize'
     config.tokenEndpoint = 'https://auth.tgalpha.com/oauth/v2/oauth-token'
+}
+
+if (environment === 'cbe') {
+    config.redirectUri = 'http://localhost:3000/';
+    config.serverBaseUri = `https://${cbeDomain}.auth.transfergo.rocks`
+    config.authorizationEndpoint = `https://${cbeDomain}.auth.transfergo.rocks/oauth/v2/oauth-authorize`
+    config.tokenEndpoint = `https://${cbeDomain}.auth.transfergo.rocks/oauth/v2/oauth-token`
 }
 
 export default config
