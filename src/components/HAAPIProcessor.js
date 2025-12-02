@@ -19,6 +19,7 @@ import StartAuthorization from "./StartAuthorization";
 
 /* UI Authenticators */
 import UsernamePassword from "../ui-kit/authenticators/UsernamePassword";
+import FinishFlow from "../ui-kit/authenticators/FinishFlow";
 
 /* UI Containers */
 import Selector from "../ui-kit/containers/Selector";
@@ -139,6 +140,10 @@ export default function HAAPIProcessor(props) {
                     haapiResponse={haapiResponse}
                     isLoading={isLoading}
                     submitForm={(url, method) => submitForm(null, url, method)}
+                />
+            case 'authentication-action/finish-flow/index':
+                return <FinishFlow
+                    haapiResponse={haapiResponse}
                 />
             case 'authenticator/external-browser/launch':
                 setStep({ name: 'external-browser-launch', haapiResponse: step.haapiResponse })
