@@ -14,14 +14,18 @@
  *  limitations under the License.
  */
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Heading from "../ui-kit/ui-components/Heading";
 import { prettyPrintJson } from "pretty-print-json";
+import config from "../config";
 
 /* UI Components */
 import { Layout, Page, Well, Logo, Checkmark } from "../ui-kit/ui-components";
 
 export default function Authenticated(props) {
+  const [userinfo, setUserinfo] = useState(null);
+  const [userinfoError, setUserinfoError] = useState(null);
+
   const decodeToken = (idToken) => {
     const dataPart = idToken.split(".")[1];
     return JSON.parse(atob(dataPart));
@@ -38,6 +42,34 @@ export default function Authenticated(props) {
   const { id_token, access_token, expires_in, nonce_token, refresh_token } = props.tokens;
 
   localStorage.setItem('idToken', id_token);
+
+  useEffect(() => {
+    const fetchUserinfo = async () => {
+      try {
+        const userinfoUrl = `${config.serverBaseUri}oauth/v2/oauth-userinfo`;
+        const response = await fetch(userinfoUrl, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${access_token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setUserinfo(data);
+      } catch (error) {
+        setUserinfoError(error.message);
+      }
+    };
+
+    if (access_token) {
+      fetchUserinfo();
+    }
+  }, [access_token]);
 
   return (
     <Layout>
@@ -71,6 +103,22 @@ export default function Authenticated(props) {
 
             <h3>refresh_token, nonce_token</h3>
             <pre className="json-container">{refresh_token}   {nonce_token}</pre>
+
+            <h3>Userinfo Payload</h3>
+            {userinfoError ? (
+              <pre className="json-container" style={{ color: 'red' }}>
+                Error fetching userinfo: {userinfoError}
+              </pre>
+            ) : userinfo ? (
+              <pre
+                className="json-container"
+                dangerouslySetInnerHTML={{
+                  __html: prettyPrintJson.toHtml(userinfo),
+                }}
+              />
+            ) : (
+              <pre className="json-container">Loading userinfo...</pre>
+            )}
 
             <pre
                 hidden
@@ -110,3 +158,4 @@ export default function Authenticated(props) {
     </Layout>
   );
 }
+
