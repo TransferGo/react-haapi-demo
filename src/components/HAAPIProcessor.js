@@ -36,6 +36,7 @@ import {OidcClient} from "./OidcClient";
 import {InitializationError} from "@curity/identityserver-haapi-web-driver";
 import {haapiConnectionIssue} from "../messages";
 import IdTokenAuthenticator from "../ui-kit/authenticators/IdTokenAuthenticator";
+import PasskeyAuthenticator from "../ui-kit/authenticators/PasskeyAuthenticator";
 import PreSelectedSelector from "../ui-kit/containers/PreSelectedSelector";
 import config from "../config";
 
@@ -55,6 +56,15 @@ export default function HAAPIProcessor(props) {
 
     const processAuthenticationStep = () => {
         const { haapiResponse } = step
+
+        const firstAction = haapiResponse.actions && haapiResponse.actions[0]
+        if (firstAction && firstAction.template === 'client-operation') {
+            if (firstAction.model.name === 'webauthn-authentication' || firstAction.model.name === 'webauthn-registration') {
+                setStep({ name: 'webauthn-redirect', haapiResponse })
+                return
+            }
+        }
+
         const view = haapiResponse.metadata.viewName
 
         switch (view) {
@@ -114,6 +124,13 @@ export default function HAAPIProcessor(props) {
                     clickLink={(url) => clickLink(url)}
                     inputProblem={step.inputProblem}
                 />
+            case 'authenticator/passkeys/authenticate-device/get':
+                return <PasskeyAuthenticator
+                    haapiResponse={haapiResponse}
+                    submitForm={(formState, url, method) => submitForm(formState, url, method)}
+                    isLoading={isLoading}
+                    clickLink={(url) => clickLink(url)}
+                />;
             case 'views/select-authenticator/index':
             case 'authenticator/group/authenticate/get':
                 if (config.authenticator == null) {
@@ -237,6 +254,8 @@ export default function HAAPIProcessor(props) {
             case 'external-browser-launch':
                 launchExternalBrowser()
                 break
+            case 'webauthn-redirect':
+                break
             default:
                 break
         }
@@ -276,6 +295,20 @@ export default function HAAPIProcessor(props) {
 
         setStep({ name: 'unknown-step', haapiResponse: step.haapiResponse})
         setMissingResponseType('Continue Step')
+    }
+
+    const handleWebAuthnRedirect = async () => {
+        const action = step.haapiResponse.actions[0]
+        const { errorActions } = action.model
+
+        if (errorActions && errorActions.length > 0) {
+            const errorAction = errorActions[0]
+            await callHaapi(
+                errorAction.model.href,
+                errorAction.model.method,
+                getRedirectBody(errorAction.model.fields)
+            )
+        }
     }
 
     const launchExternalBrowser = async () => {
@@ -374,6 +407,14 @@ export default function HAAPIProcessor(props) {
         case 'continue-redirect-step':
         case 'process-result':
             stepComponent = <Spinner/>
+            break
+        case 'webauthn-redirect':
+            stepComponent = <PasskeyAuthenticator
+                haapiResponse={step.haapiResponse}
+                onContinue={() => handleWebAuthnRedirect()}
+                clickLink={(url) => clickLink(url)}
+                isLoading={isLoading}
+            />
             break
         case 'authentication-step':
         case 'registration-step':
