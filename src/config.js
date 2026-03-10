@@ -43,21 +43,21 @@ let config = {
 };
 
 if (environment === 'dev') {
-    config.redirectUri = 'http://localhost:3000/';
+    config.redirectUri = 'http://localhost:3001/';
     config.serverBaseUri = 'https://auth.transfergo.land/'
     config.authorizationEndpoint = 'https://auth.transfergo.land/oauth/v2/oauth-authorize'
     config.tokenEndpoint = 'https://auth.transfergo.land/oauth/v2/oauth-token'
 }
 
 if (environment === 'staging') {
-    config.redirectUri = 'https://dcysov8zlfov7.cloudfront.net/';
+    config.redirectUri = 'http://localhost:3001/';
     config.serverBaseUri = 'https://auth.tgalpha.com/'
     config.authorizationEndpoint = 'https://auth.tgalpha.com/oauth/v2/oauth-authorize'
     config.tokenEndpoint = 'https://auth.tgalpha.com/oauth/v2/oauth-token'
 }
 
 if (environment === 'cbe') {
-    config.redirectUri = 'http://localhost:3000/';
+    config.redirectUri = 'http://localhost:3001/';
     config.serverBaseUri = `https://${cbeDomain}.auth.transfergo.rocks`
     config.authorizationEndpoint = `https://${cbeDomain}.auth.transfergo.rocks/oauth/v2/oauth-authorize`
     config.tokenEndpoint = `https://${cbeDomain}.auth.transfergo.rocks/oauth/v2/oauth-token`

@@ -25,6 +25,8 @@ import { Layout, Page, Well, Logo, Checkmark } from "../ui-kit/ui-components";
 export default function Authenticated(props) {
   const [userinfo, setUserinfo] = useState(null);
   const [userinfoError, setUserinfoError] = useState(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [refreshError, setRefreshError] = useState(null);
 
   const decodeToken = (idToken) => {
     const dataPart = idToken.split(".")[1];
@@ -42,6 +44,35 @@ export default function Authenticated(props) {
   const { id_token, access_token, expires_in, nonce_token, refresh_token } = props.tokens;
 
   localStorage.setItem('idToken', id_token);
+
+  const handleRefreshToken = async () => {
+    if (!refresh_token) return;
+
+    setIsRefreshing(true);
+    setRefreshError(null);
+    try {
+      const response = await fetch(config.tokenEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          client_id: config.clientId,
+          grant_type: 'refresh_token',
+          refresh_token: refresh_token,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Token refresh failed: ${response.status}`);
+      }
+
+      const newTokens = await response.json();
+      props.setTokens({ ...props.tokens, ...newTokens });
+    } catch (error) {
+      setRefreshError(error.message);
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
 
   useEffect(() => {
     const fetchUserinfo = async () => {
@@ -145,10 +176,21 @@ export default function Authenticated(props) {
                 }}
             />
           </div>
+          {refreshError && (
+            <pre className="json-container" style={{ color: 'red' }}>
+              Error refreshing token: {refreshError}
+            </pre>
+          )}
           <div style={{ display: "flex", justifyContent: "center", gap: "16px", marginTop: "16px" }}>
-            {/* <button className="button button-primary" onClick={() => props.setTokens(null)}>
-              Start authentication with the same HAAPI session
-            </button> */}
+            {refresh_token && (
+              <button
+                className="button button-primary"
+                onClick={handleRefreshToken}
+                disabled={isRefreshing}
+              >
+                {isRefreshing ? 'Refreshing...' : 'Refresh Token'}
+              </button>
+            )}
             <button className="button" onClick={() => window.location.reload()}>
               Logout
             </button>
