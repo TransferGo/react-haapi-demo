@@ -29,6 +29,7 @@ import FormSelector from "../ui-kit/containers/FormSelector";
 import {Spinner, Error, Layout, Page, Well, Logo, Heading} from "../ui-kit/ui-components";
 
 import UsernamePasswordContinue from "../ui-kit/authenticators/UsernamePasswordContinue";
+import BankBridgeOnboarding from "../ui-kit/authenticators/BankBridgeOnboarding";
 import ShowRawResponse from "./ShowRawResponse";
 import RedirectStep from "./RedirectStep";
 import {prettyPrintJson} from "pretty-print-json";
@@ -161,6 +162,12 @@ export default function HAAPIProcessor(props) {
             case 'authentication-action/finish-flow/index':
                 return <FinishFlow
                     haapiResponse={haapiResponse}
+                />
+            case 'authentication-action/bank-bridge-onboarding/index':
+                return <BankBridgeOnboarding
+                    haapiResponse={haapiResponse}
+                    submitForm={(formState, url, method) => submitForm(formState, url, method)}
+                    isLoading={isLoading}
                 />
             case 'authenticator/external-browser/launch':
                 setStep({ name: 'external-browser-launch', haapiResponse: step.haapiResponse })
