@@ -1,19 +1,3 @@
-/*
- *  Copyright 2022 Curity AB
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
-
 import React from "react";
 
 /* UI Components */
@@ -22,12 +6,6 @@ import { Layout, Page, Well, Logo, Heading, Button } from "../ui-components";
 /*
  * Renders the bank-bridge onboarding authentication action
  * (viewName: authentication-action/bank-bridge-onboarding/index).
- *
- * The action is a "continue" form carrying three hidden fields: mode, webViewUrl
- * and processId. When webViewUrl is present the user must open the bank's
- * onboarding web view, complete it, then submit the form to continue the flow.
- * When it is absent (e.g. the user is already onboarded) the form is submitted
- * directly to advance the flow.
  */
 export default function BankBridgeOnboarding(props) {
     const { actions, messages } = props.haapiResponse
