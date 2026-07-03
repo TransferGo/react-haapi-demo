@@ -5,7 +5,7 @@ using the React framework.
 
 ## Running the demo
 
-To run the demo app:
+To run the demo app: 
 
 1. Install dependencies by running `npm i`
 2. Set configuration settings in `src/config.js`, e.g. endpoints of the Curity Identity Server, client ID, etc.

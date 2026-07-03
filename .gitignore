@@ -24,3 +24,4 @@ yarn-error.log*
 
 idsvr/license.json
 idsvr/idsvr.env
+.idea
